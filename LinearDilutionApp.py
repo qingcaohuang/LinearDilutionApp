@@ -291,8 +291,9 @@ with ex_r:
         df_mid_pdf.columns = ["组分", f"理论质量({unit_mass})", f"加入质量({unit_mass})", f"目标浓度({unit_conc})", f"实际配置浓度({unit_conc})"]
         meta = {
             "实验内容": exp_name, "环境温度": f"{input_temp} degC", "水密度": f"{rho_w} g/cm3", "生理盐水密度": f"{rho_s} g/cm3",
-            "高浓度材料": f"{c_h_orig} (D:{rho_h_orig})", "低浓度材料": f"{c_l_orig} (D:{rho_l_orig})", "中间材料": f"{actual_c_mid:.2f} (D:{actual_rho_mid:.4f})",
-            "高浓度材料合计": f"{total_h:.1f}", "低浓度材料合计": f"{total_l:.1f}", "生成时间": datetime.now().strftime("%Y-%m-%d %H:%M"), "程序版本": VERSION
+            "高浓度材料": f"{c_h_orig} {unit_conc} (密度:{rho_h_orig:.4f})",
+            "低浓度材料": f"{c_l_orig} {unit_conc} (密度:{rho_l_orig:.4f})", "中间浓度材料": f"{actual_c_mid:.2f} {unit_conc} (密度:{actual_rho_mid:.4f})",
+            "高浓度材料合计量": f"{total_h:.1f} {unit_mass}", "低浓度材料合计量": f"{total_l:.1f} {unit_mass}","生成时间": datetime.now().strftime("%Y-%m-%d %H:%M"), "程序版本": VERSION
         }
         pdf_out = create_pdf(pd.DataFrame(results_data), df_mid_pdf, "线性评价样本制备记录", meta)
         st.download_button("📥 下载 PDF", data=bytes(pdf_out), file_name=f"Report_{exp_name}.pdf", use_container_width=True)
